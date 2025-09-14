@@ -51,7 +51,9 @@ int main()
 
         bottom_panel(panel_vector[(main_panel_index + idx) % NUM_OF_WINS % NUM_OF_WINS]);
 
+        wattron(win_vector[idx], A_BOLD | A_UNDERLINE);
         mvwprintw(panel_window(panel_vector[idx]), 1, 1, MSG_PANEL_NUM, idx);
+        wattroff(win_vector[idx], A_BOLD | A_UNDERLINE);
     }
 
     mvprintw(1, 1, MSG_USAGE);
