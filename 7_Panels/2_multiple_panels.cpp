@@ -2,9 +2,10 @@
 #include <panel.h>
 #include <vector>
 
-#define NUM_OF_WINS 10
+#define NUM_OF_WINS 8
 
-#define MSG_USAGE   "Use arrows to move main panel. Use q / Q to end the program."
+#define MSG_USAGE       "Use arrows to move main panel. Use q / Q to end the program."
+#define MSG_PANEL_NUM   "Panel number %d"
 
 /*
 In this example, we will create 10 windows wrapped by another 10 panels.
@@ -18,6 +19,9 @@ int main()
     noecho();
     curs_set(0);
     keypad(stdscr, true);
+
+    if(has_colors())
+        start_color();
 
     int h       = 15;
     int w       = 30;
@@ -35,11 +39,19 @@ int main()
     {
         win_vector[idx] = newwin(h, w, st_y + idx, st_x + (2 * idx));
 
+        if(has_colors())
+        {
+            init_pair(idx, ((COLOR_BLACK + idx + 1) % (COLOR_WHITE - COLOR_BLACK + 1)), COLOR_BLACK + idx);
+            wbkgd(win_vector[idx], COLOR_PAIR(idx));
+        }
+
         box(win_vector[idx], 0, 0);
 
         panel_vector[idx] = new_panel(win_vector[idx]);
 
         bottom_panel(panel_vector[(main_panel_index + idx) % NUM_OF_WINS % NUM_OF_WINS]);
+
+        mvwprintw(panel_window(panel_vector[idx]), 1, 1, MSG_PANEL_NUM, idx);
     }
 
     mvprintw(1, 1, MSG_USAGE);
