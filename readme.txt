@@ -11,3 +11,6 @@ The example above will compile separatedly every source file found into "2_Basic
 
 If you're encountering issues compiling or running ncurses-based programs (e.g., fatal error: ncurses.h: No such file or directory), make sure to install all required ncurses packages by running the following command:
     sudo apt update && sudo apt install -y libncurses6 ncurses-bin ncurses-base libncurses-dev
+
+Most of the times, solely libncurses-dev is required. If any of the packages previously installed is not meant to stay afterwards, the use:
+    sudo apt remove --purge -y libncurses-dev 
